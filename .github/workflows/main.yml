@@ -1,32 +1,18 @@
-name: Test Mac Mini Runner
+name: 5 Runner Parallel Test
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-runner:
-    runs-on: self-hosted
+  test:
+    strategy:
+      matrix:
+        slot: [1, 2, 3, 4, 5]
+    runs-on: [self-hosted, macOS, ARM64]
 
     steps:
-      - name: Print system info
+      - name: Print runner
         run: |
-          echo "Runner is working!"
-          uname -a
-          sw_vers
-          sysctl -n machdep.cpu.brand_string
-
-      - name: Print labels hint
-        run: |
-          echo "If this job runs, your self-hosted runner is connected correctly."
-
-      - name: Check Xcode
-        run: |
-          xcodebuild -version || echo "Xcode not installed"
-
-      - name: Check Node
-        run: |
-          node -v || echo "Node not installed"
-
-      - name: Check Homebrew
-        run: |
-          brew --version || echo "Homebrew not installed"
+          echo "RUNNER_NAME=$RUNNER_NAME"
+          echo "SLOT=${{ matrix.slot }}"
+          sleep 120
