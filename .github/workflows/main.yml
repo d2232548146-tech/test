@@ -15,6 +15,10 @@ jobs:
           sw_vers
           sysctl -n machdep.cpu.brand_string
 
+      - name: Print labels hint
+        run: |
+          echo "If this job runs, your self-hosted runner is connected correctly."
+
       - name: Check Xcode
         run: |
           xcodebuild -version || echo "Xcode not installed"
