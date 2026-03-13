@@ -1,0 +1,28 @@
+name: Test Mac Mini Runner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-runner:
+    runs-on: [self-hosted, macOS, ARM64]
+
+    steps:
+      - name: Print system info
+        run: |
+          echo "Runner is working!"
+          uname -a
+          sw_vers
+          sysctl -n machdep.cpu.brand_string
+
+      - name: Check Xcode
+        run: |
+          xcodebuild -version || echo "Xcode not installed"
+
+      - name: Check Node
+        run: |
+          node -v || echo "Node not installed"
+
+      - name: Check Homebrew
+        run: |
+          brew --version || echo "Homebrew not installed"
